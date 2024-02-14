@@ -30,7 +30,7 @@ using cpair = boost::compressed_pair<T, U>;
 static_assert(sizeof(cpair<int, int>) == 2 * sizeof(int), "Compressed pair holds two things");
 static_assert(sizeof(cpair<int, Empty>) == sizeof(int), "Empty classes don't impose additional storage");
 static_assert(sizeof(cpair<Empty, int>) == sizeof(int), "Empty classes don't impose additional storage");
-static_assert(sizeof(cpair<Empty, Empty>) == sizeof(Empty), "Both empty still holds one Empty amount of stoage");
+static_assert(sizeof(cpair<Empty, Empty>) == sizeof(Empty), "Both empty still holds one Empty amount of storage");
 
 // See also: https://github.com/Morwenn/tight_pair and other compressed pair implementations
 
@@ -43,6 +43,7 @@ std::ostream &operator<<(std::ostream &str, const Derived &val)
 {
     return str << "Derived{ " << val.i << " }";
 }
+
 int main()
 {
     cpair<Derived, Empty> p{Derived{42}, Empty{}};
