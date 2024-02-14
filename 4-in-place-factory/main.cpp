@@ -10,6 +10,11 @@ struct Point
         y(y)
     {
     }
+    ~Point()
+    {
+        x = -1;
+        y = -1;
+    }
     int x;
     int y;
 };
@@ -19,6 +24,7 @@ struct Container
     Container() = default;
     ~Container()
     {
+        m_storage->~Point();
         delete[] static_cast<char *>(static_cast<void *>(m_storage));
     }
 
@@ -61,11 +67,15 @@ private:
 
 int main()
 {
-    Container p1(boost::in_place(1, 2));
-    std::cout << "p1(" << p1.value().x << ", " << p1.value().y << ")\n";
+    {
+        Container p1(boost::in_place(1, 2));
+        std::cout << "p1(" << p1.value().x << ", " << p1.value().y << ")\n";
+    }
 
-    Container p2(boost::in_place<Point>(3, 4));
-    std::cout << "p2(" << p2.value().x << ", " << p2.value().y << ")\n";
+    {
+        Container p2(boost::in_place<Point>(3, 4));
+        std::cout << "p2(" << p2.value().x << ", " << p2.value().y << ")\n";
+    }
 
     return 0;
 }
